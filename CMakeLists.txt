@@ -1,0 +1,22 @@
+cmake_minimum_required(VERSION 2.8.3)
+project(bno055_imu)
+
+add_compile_options(-std=c++14 -li2c)
+
+find_package(catkin REQUIRED COMPONENTS roscpp sensor_msgs std_msgs diagnostic_msgs)
+
+catkin_package(INCLUDE_DIRS include)
+
+include_directories(include ${catkin_INCLUDE_DIRS})
+
+add_executable(bno055_imu_node src/bno055_driver.cpp src/bno055_imu_node.cpp src/watchdog.cpp)
+
+include_directories(${catkin_INCLUDE_DIRS})
+
+target_link_libraries(bno055_imu_node ${catkin_LIBRARIES})
+
+install(TARGETS bno055_imu_node
+  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
