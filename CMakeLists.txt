@@ -9,7 +9,7 @@ catkin_package(INCLUDE_DIRS include)
 
 include_directories(include ${catkin_INCLUDE_DIRS})
 
-add_executable(bno055_imu_node src/bno055_driver.cpp src/bno055_imu_node.cpp src/watchdog.cpp)
+add_executable(bno055_imu_node src/bno055_driver.cpp src/bno055_imu_node.cpp)
 
 include_directories(${catkin_INCLUDE_DIRS})
 

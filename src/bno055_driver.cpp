@@ -26,6 +26,48 @@
  * 
 */
 
+#include "bno055_driver.h"
+
+#define BNO055_CHIP_ID_ADDR 0x00
+#define BNO055_ACCEL_REV_ID_ADDR 0x01
+#define BNO055_MAG_REV_ID_ADDR 0x02
+#define BNO055_GYRO_REV_ID_ADDR 0x03
+#define BNO055_SW_REV_ID_LSB_ADDR 0x04
+#define BNO055_SW_REV_ID_MSB_ADDR 0x05
+#define BNO055_BL_REV_ID_ADDR 0X06
+#define BNO055_PAGE_ID_ADDR 0X07
+#define BNO055_GYRO_DATA_X_LSB_ADDR 0X14
+
 namespace bno055_imu {
-    
+    BN0055Driver::BNO055Driver(std::string device_, int address_){
+        device = device_;
+        adress = adress_;
+    }
+
+    void BNO055Driver::init() {
+
+        file = open(device.c_str(), O_RDWR);
+
+        if(ioctl(file, I2C_SLAVE, address) < 0) {
+            throw std::runtime_error("Could not open i2c device!!");
+        }
+
+        if(bno_i2c_smbus_read_byte_data(file, BNO055_CHIP_ID_ADDR) != BNO055_ID) {
+            throw std::runtime_error("incorrect chip ID");
+        }
+
+        std::cout<< "Chip ID: " << bno_i2c_smbus_read_byte_data(file, BNO055_CHIP_ID_ADDR) << std::endl;
+    }
+
+    imu_data_t BNO055Driver::read() {
+        imu_data_t data;
+        unsigned char c = 0;
+
+        if(bno_i2c_smbus_read_i2c_block_data(file, BNO055_GYRO_DATA_X_LSB_ADDR, 32, (uint8_t*)&data) != 0x20) {
+            throw std::runtime_error("read error");
+        }
+
+        return data;
+    }
+
 }

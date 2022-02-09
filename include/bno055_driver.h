@@ -40,7 +40,7 @@
 
 #include <sys/ioctl.h>
 #include <linux/i2c-dev.h>
-#include <smbus_functions.h>
+#include <smbus_func.h>
 
 
 /** BNO055 Address Alternative **/
@@ -352,7 +352,7 @@ class BNO055Driver {
     BNO055Driver(std::string device_, int address_);
     void init();
     bool reset();
-    bool calibrate();
+    // bool calibrate();
     imu_data_t read_imu_data();
 
   private:
