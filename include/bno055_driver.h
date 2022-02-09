@@ -57,15 +57,6 @@
 #define NUM_BNO055_QUATERNION_REGISTERS (8)
 #define NUM_BNO055_EULER_REGISTERS (6)
 
-/** I2C configuration settings **/
-#define I2C_MASTER_SCL_IO (19)      //CONFIG_I2C_MASTER_SCL      /*!< GPIO number used for I2C master clock */
-#define I2C_MASTER_SDA_IO (18)      //CONFIG_I2C_MASTER_SDA      /*!< GPIO number used for I2C master data  */
-#define I2C_MASTER_NUM I2C_NUM_0    /*!< I2C master i2c port number */
-#define I2C_MASTER_FREQ_HZ 400000   /*!< I2C master clock frequency */
-#define I2C_MASTER_TX_BUF_DISABLE 0 /*!< I2C master doesn't need buffer */
-#define I2C_MASTER_RX_BUF_DISABLE 0 /*!< I2C master doesn't need buffer */
-#define I2C_MASTER_TIMEOUT_MS 1000  /*!< I2C master timeout */
-#define I2C_CONNECTION_TO_TRY 10    /*!< I2C number of times to try to send a message */
 
 namespace bno055_imu {
 
