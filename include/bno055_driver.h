@@ -28,6 +28,7 @@
 
 #pragma once
 
+#include <ros/ros.h>
 #include <iostream>
 #include <cstdlib>
 #include <cstring>
@@ -36,7 +37,7 @@
 #include <cerrno>
 #include <chrono>
 #include <thread>
-#include <ros/ros.h>
+
 
 #include <sys/ioctl.h>
 #include <linux/i2c-dev.h>
