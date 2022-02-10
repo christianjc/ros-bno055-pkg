@@ -36,14 +36,14 @@
 #include <std_srvs/Trigger.h>
 #include <std_msgs/UInt8.h>
 
-#include <bno055_driver.h>
+#include <bno055_driver/bno055_driver.h>
 
 
-class BNO055None {
+class BNO055Node {
     private:
         ros::NodeHandle* node_hadle;
         ros::NodeHandle* node_hadle_private;
-        std::unique_ptr<imu_bno055::BNO055Driver> bno_imu;
+        std::unique_ptr<bno055_imu::BNO055Driver> bno_imu;
 
         std::string param_device;
         int param_address;
@@ -62,7 +62,7 @@ class BNO055None {
         void run();
         bool publishData();
         void stop();
-}
+};
 
 
 BNO055Node::BNO055Node(int argc, char* argv[]) {
@@ -81,7 +81,7 @@ BNO055Node::BNO055Node(int argc, char* argv[]) {
     node_hadle_private->param("frame_id", param_frame_id, (std::string)"bno_imu");
     node_hadle_private->param("rate", param_rate, (double)100);
  
-    bno_imu = std::make_unique<imu_bno055::BNO055Driver>(param_device, param_address);
+    bno_imu = std::make_unique<bno055_imu::BNO055Driver>(param_device, param_address);
 
     bno_imu->init();
 
@@ -97,6 +97,7 @@ void BNO055Node::run() {
     int num_of_fails = 0;
     while(ros::ok()) {
         rate->sleep();
+        std::cout << "Called the published node" << std::endl;
         if(!publishData()) {
             std::cout << "could not publish" << std::endl;
             num_of_fails++;
@@ -111,7 +112,7 @@ bool BNO055Node::publishData() {
     bno055_imu::imu_data_t data;
 
     try {
-        data = bno_imu->read();
+        data = bno_imu->read_imu_data();
     } catch(const std::runtime_error& e) {
         ROS_WARN_STREAM(e.what());
     }

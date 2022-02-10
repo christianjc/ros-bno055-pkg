@@ -26,7 +26,7 @@
  * 
 */
 
-#include "bno055_driver.h"
+#include "bno055_driver/bno055_driver.h"
 
 #define BNO055_CHIP_ID_ADDR 0x00
 #define BNO055_ACCEL_REV_ID_ADDR 0x01
@@ -39,9 +39,9 @@
 #define BNO055_GYRO_DATA_X_LSB_ADDR 0X14
 
 namespace bno055_imu {
-    BN0055Driver::BNO055Driver(std::string device_, int address_){
+    BNO055Driver::BNO055Driver(std::string device_, int address_){
         device = device_;
-        adress = adress_;
+        address = address_;
     }
 
     void BNO055Driver::init() {
@@ -59,7 +59,7 @@ namespace bno055_imu {
         std::cout<< "Chip ID: " << bno_i2c_smbus_read_byte_data(file, BNO055_CHIP_ID_ADDR) << std::endl;
     }
 
-    imu_data_t BNO055Driver::read() {
+    imu_data_t BNO055Driver::read_imu_data() {
         imu_data_t data;
         unsigned char c = 0;
 

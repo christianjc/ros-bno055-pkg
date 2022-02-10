@@ -341,6 +341,7 @@ typedef struct {
 } imu_data_t;
 
 class BNO055Driver {
+    public:
     BNO055Driver(std::string device_, int address_);
     void init();
     bool reset();
@@ -351,6 +352,6 @@ class BNO055Driver {
     int file;
     std::string device;
     int address;  
-}
+};
 
 }
